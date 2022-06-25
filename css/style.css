@@ -1,0 +1,75 @@
+/*estilos generales*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Board-game 
+con este main se obtiene 4 columnas, con la funcion repeat hace que se repita 4 veces de un 1fr (una fracción tal cual)
+se configura el tamaño de la imagen */
+main {
+    display: grid; 
+    grid-gap: 10px;/*Separar las tarjetas*/
+    grid-template-columns: repeat(4, 1fr); 
+    max-width: 1000px; 
+    margin: auto;
+}
+
+/* Tarjetas
+con esta funcion ingresamos a las etiquetas figure y a las imagenes que estan adentro del html 
+lo que se va hacer es que respeten el ancho del padre(figure la cual va tener un width del 100% y se pone un margin
+en auto, para que se centre todo*/
+figure,
+figure img {  
+    display: inline-block; 
+    width: 100%;
+}
+
+figure {
+    position: relative;
+    transition: all ease .5s;
+    transform-style: preserve-3d; /*Estilo 3d para todos las tarjetas*/
+    transform: perspective(600px) rotateY(0deg); /*rotación de la tarjeta en Y*/
+    cursor: pointer;/*estilo del cursor*/
+    box-shadow: 3px 3px 16 px rgba(0,0,0,0.6);
+}
+
+figure::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255, 0);
+    transition: 0.3s all ease;
+
+}
+
+figure:hover:after{
+    background: rgb(255, 255, 255, 0.137);
+}
+
+/*le decimos a figure con la clase opened importante que no este separada por que estariamos buscando a hijos 
+con la clase opened, lo que queremos buscar es una etiqueta figure con la clase opened */
+figure.opened {
+    transform: perspective(600px) rotateY(180deg);/* girar la tarjeta a 180°*/
+}
+
+figure .back{
+    display: block;
+    backface-visibility: hidden;
+}
+
+/* se centra a partir del elemento padre, pero si o si debe de haber un relative en la figure en el html esta en la
+clase div searched-image recordar que ese div es hijo de figure*/
+figure .searched-image {
+    position: absolute;
+    top: 0;
+    transform: perspective(600px) rotateY(180deg); /*rotación de tarjeta trasera 180S°*/
+    backface-visibility: hidden;
+    height: 100%;
+    overflow: hidden;
+}
